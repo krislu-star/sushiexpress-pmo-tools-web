@@ -1,0 +1,10 @@
+out
+.next
+coverage
+pnpm-lock.yaml
+data/snapshot.json
+tests/fixtures/snapshot.*.json
+tests/fixtures/csv
+out-perf
+out-e2e
+out-e2e-readonly

@@ -1,0 +1,19 @@
+.table-constraints {
+  min-height: 124px;
+  /* 44px (header) + 6 * 80px (6row) */
+  max-height: calc(524px + 3px);
+}
+
+@container main (min-height: 920px) {
+  .table-constraints {
+    /* 44px (header) + 8 * 80px (6row) */
+    max-height: calc(684px + 3px);
+  }
+}
+
+@container main (min-height: 1080px) {
+  .table-constraints {
+    /* 44px (header) + 10 * 80px (6row) */
+    max-height: calc(844px + 3px);
+  }
+}

@@ -1,0 +1,103 @@
+# 工作表自動更新與網站發佈（specs/002-pmo-data-sync-and-access；plan ADR-004～ADR-006）
+# 每天台北 09:00（UTC 01:00）、合併到 master 時與手動觸發：
+# 讀取工作表 → 加密建置 → 檢查 → 發佈 GitHub Pages（網址取自 Pages 設定）→ 報告與 Email 通知（每次執行）
+name: 更新工作表資料
+
+on:
+  schedule:
+    - cron: '0 1 * * *'
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: update-data
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: 讀取工作表
+        run: pnpm snapshot:fetch
+        env:
+          GOOGLE_SERVICE_ACCOUNT_KEY: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_KEY }}
+
+      - name: 加密並建置
+        run: pnpm build
+        env:
+          PMO_ACCESS_PASSWORD: ${{ secrets.PMO_ACCESS_PASSWORD }}
+          NEXT_PUBLIC_BASE_PATH: ${{ vars.NEXT_PUBLIC_BASE_PATH }}
+          NEXT_PUBLIC_PMO_MEETING_EDIT: ${{ vars.NEXT_PUBLIC_PMO_MEETING_EDIT }}
+
+      - name: 檢查產物（無行內腳本、無明文）
+        run: |
+          pnpm exec tsx scripts/check-inline-scripts.ts out
+          pnpm check:plaintext
+
+      - name: 擷取日期
+        id: date
+        run: echo "value=$(TZ=Asia/Taipei date +%F)" >> "$GITHUB_OUTPUT"
+
+      - name: 上傳可交付的頁面檔案（供 BPM 等其他空間使用）
+        uses: actions/upload-artifact@v4
+        with:
+          name: pmo-site-${{ steps.date.outputs.value }}
+          path: out/
+          retention-days: 30
+
+      - name: 設定 GitHub Pages
+        uses: actions/configure-pages@v6
+
+      - name: 上傳網站
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: out/
+
+      - name: 發佈網站
+        id: deployment
+        uses: actions/deploy-pages@v5
+
+      - name: 更新報告（Job Summary）
+        if: always()
+        run: pnpm snapshot:report ${{ job.status }}
+
+      - name: 上傳更新報告
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: update-report-${{ github.run_id }}
+          path: update-report.json
+          retention-days: 90
+          if-no-files-found: warn
+
+      - name: Email 通知（每次執行）
+        if: always()
+        run: pnpm snapshot:notify
+        env:
+          PMO_SITE_URL: ${{ steps.deployment.outputs.page_url }}
+          PMO_NOTIFY_EMAIL: ${{ vars.PMO_NOTIFY_EMAIL }}
+          PMO_SMTP_HOST: ${{ vars.PMO_SMTP_HOST }}
+          PMO_SMTP_PORT: ${{ vars.PMO_SMTP_PORT }}
+          PMO_SMTP_FROM: ${{ vars.PMO_SMTP_FROM }}
+          PMO_SMTP_USER: ${{ secrets.PMO_SMTP_USER }}
+          PMO_SMTP_PASSWORD: ${{ secrets.PMO_SMTP_PASSWORD }}

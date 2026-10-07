@@ -1,0 +1,198 @@
+/* 設計 token 複製自 cms/packages/design/src/styles/globals.css（cms@0a0a5e2c），色值改為爭鮮主題 */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* sushi: 爭鮮主題（主色 #E95529；文字與按鈕用色皆符合 WCAG AA 對比） */
+    --color-brand: #e95529;
+    --font-noto-sans-tc:
+      'PingFang TC', 'Microsoft JhengHei', 'Noto Sans TC', Arial;
+    /* Achromatic */
+    --color-achromatic-100: #ffffff;
+    --color-achromatic-200: #fafafa;
+    --color-achromatic-300: #f5f5f5;
+    --color-achromatic-400: #e5e5e5;
+    --color-achromatic-500: #d4d4d4;
+    --color-achromatic-600: #a3a3a3;
+    --color-achromatic-700: #737373;
+    --color-achromatic-800: #525252;
+    --color-achromatic-900: #202226;
+    /* Error */
+    --color-error-100: #fef2f2;
+    --color-error-200: #ef4444;
+    --color-error-300: #dc2626;
+    /* Primary */
+    --color-primary-100: #fff4ef;
+    --color-primary-200: #ffe3d6;
+    --color-primary-300: #f9b89c;
+    --color-primary-400: #c2461f;
+    --color-primary-500: #ad3718;
+    /* Success */
+    --color-success-100: #e9f6ea;
+    --color-success-200: #15803d;
+    /* Warning */
+    --color-warning-100: #fff7ed;
+    --color-warning-200: #b45309;
+
+    /* Token */
+    --color-border-error: var(--color-error-300);
+    --color-border-brand: var(--color-primary-500);
+    --color-border-warning: var(--color-warning-200);
+    --color-border-primary: var(--color-achromatic-500);
+    --color-border-primary-minor: var(--color-achromatic-400);
+    --color-border-secondary: var(--color-primary-300);
+    --color-border-secondary-minor: var(--color-primary-200);
+    --color-border-success: var(--color-success-200);
+    --color-border-third: var(--color-primary-400);
+
+    --color-button-error: var(--color-error-300);
+    --color-button-error-hover: var(--color-error-200);
+    --color-button-error-second: var(--color-error-100);
+    --color-button-disable: var(--color-achromatic-500);
+    --color-button-icon-default: var(--color-achromatic-800);
+    --color-button-invert: var(--color-achromatic-100);
+    --color-button-invert-hover: var(--color-primary-100);
+    --color-button-primary: var(--color-primary-500);
+    --color-button-primary-hover: var(--color-primary-400);
+    --color-button-secondary: var(--color-primary-200);
+    --color-button-secondary-disable: var(--color-achromatic-300);
+    --color-button-secondary-hover: var(--color-primary-300);
+    --color-button-third: var(--color-primary-100);
+
+    --color-hint-default: var(--color-achromatic-100);
+    --color-hint-error: var(--color-error-100);
+    --color-hint-warning: var(--color-warning-100);
+    --color-hint-success: var(--color-success-100);
+
+    --color-icon-error: var(--color-error-300);
+    --color-icon-warning: var(--color-warning-200);
+    --color-icon-brand: var(--color-primary-500);
+    --color-icon-invert: var(--color-achromatic-100);
+    --color-icon-primary: var(--color-achromatic-800);
+    --color-icon-secondary: var(--color-achromatic-700);
+    --color-icon-success: var(--color-success-200);
+
+    --color-surface-background: var(--color-achromatic-200);
+    --color-surface-brand: var(--color-primary-400);
+    --color-surface-primary: var(--color-primary-100);
+    --color-surface-secondary: var(--color-achromatic-100);
+
+    --color-tab-primary: var(--color-achromatic-100);
+    --color-tab-secondary: var(--color-achromatic-500);
+    --color-tab-state-active: var(--color-primary-100);
+
+    --color-text-error: var(--color-error-300);
+    --color-text-brand: var(--color-primary-500);
+    --color-text-default: var(--color-achromatic-700);
+    --color-text-warning: var(--color-warning-200);
+    --color-text-invert: var(--color-achromatic-100);
+    --color-text-primary: var(--color-achromatic-900);
+    --color-text-secondary: var(--color-achromatic-800);
+    --color-text-success: var(--color-success-200);
+    --color-text-third: var(--color-primary-400);
+
+    --variate-2: 2px;
+    --variate-3: 3px;
+    --variate-4: 4px;
+    --variate-6: 6px;
+    --variate-8: 8px;
+    --variate-10: 10px;
+    --variate-12: 12px;
+    --variate-14: 14px;
+    --variate-16: 16px;
+    --variate-20: 20px;
+    --variate-24: 24px;
+    --variate-28: 28px;
+    --variate-36: 36px;
+    --variate-64: 64px;
+
+    --radius-4: var(--variate-4);
+    --radius-6: var(--variate-6);
+    --radius-8: var(--variate-8);
+    --radius-64: var(--variate-64);
+
+    --effect-3: var(--variate-3);
+    --effect-4: var(--variate-4);
+    --effect-6: var(--variate-6);
+    --effect-10: var(--variate-10);
+
+    --button-notice-shadow: 0 0 10px 0 rgba(233, 85, 41, 0.5);
+    --sidebar-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    --select-shadow: 0 4px 6px rgba(0, 0, 0, 0.09);
+    --invalid-shadow: inset 0 0 0 2px var(--color-border-error);
+    --shadow-toast-info: 0 4px 6px rgba(0, 0, 0, 0.09);
+    --shadow-toast-success: 0 3px 3px 0 rgba(82, 211, 103, 0.5);
+    --shadow-toast-warning: 0 3px 3px 0 rgba(251, 146, 60, 0.5);
+    --shadow-toast-error: 0 3px 3px 0 rgba(248, 113, 113, 0.5);
+  }
+
+  html {
+    @apply bg-surface-background font-sans-zh text-text-primary;
+  }
+
+  ::selection {
+    background-color: var(--color-button-invert-hover);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* A4 列印（spec NFR-005）：只輸出報告頁，操作元件隱藏，黑白可辨識 */
+@page {
+  size: A4 portrait;
+  margin: 12mm;
+}
+
+@media print {
+  html,
+  body {
+    background: #fff !important;
+  }
+
+  .drag-handle {
+    display: none !important;
+  }
+
+  .report-pages {
+    gap: 0 !important;
+  }
+
+  .report-paper {
+    width: 186mm;
+    max-width: none;
+    height: 272mm;
+    margin: 0;
+    padding: 0 0 15mm;
+    box-shadow: none;
+    break-after: page;
+  }
+
+  .report-paper:last-child {
+    break-after: auto;
+  }
+
+  .report-paper footer {
+    left: 0;
+    right: 0;
+    bottom: 4mm;
+  }
+
+  .report-case {
+    padding-left: 0 !important;
+    break-inside: avoid;
+  }
+
+  .report-paper [data-status] {
+    color: #222 !important;
+    border-color: #888 !important;
+  }
+}

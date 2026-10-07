@@ -1,0 +1,21 @@
+{
+  "spreadsheetId": "1uUL1xE_Q3Wu3gBRqYrtGsoqwQXa_gI39NXb2FZu-XQw",
+  "sheets": {
+    "Frontend": {
+      "title": "Frontend",
+      "sheetId": 1752624033
+    },
+    "Project": {
+      "title": "Project",
+      "sheetId": 467357949
+    },
+    "BPM": {
+      "title": "BPM",
+      "sheetId": 1347551289
+    },
+    "SAP": {
+      "title": "SAP",
+      "sheetId": 846692678
+    }
+  }
+}

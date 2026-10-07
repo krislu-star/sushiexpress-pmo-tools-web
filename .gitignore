@@ -1,0 +1,46 @@
+# dependencies
+/node_modules
+
+# testing
+/coverage
+/test-results/
+/playwright-report/
+
+# next.js
+/.next/
+/out/
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+pnpm-debug.log*
+
+# local env files
+.env
+.env*.local
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# 工作表原始 CSV 含真實資料，只提交轉換後的 data/snapshot.json
+/data/raw/*.csv
+/out-perf/
+/out-e2e/
+
+# 真實快照只存在 CI 與 artifact（plan 002 ADR-007）；本機請以 snapshot:fetch／snapshot:build 產生，或複製測試快照
+/data/snapshot.json
+/data/snapshot-bak.json
+
+# 每次更新產生的報告（附於 artifact）
+/update-report.json
+
+# 建置前加密產生的頁面資料
+/.pmo/
+
+# 建置前加密產生的頁面資料
+/.pmo/
+/out-e2e-readonly/
